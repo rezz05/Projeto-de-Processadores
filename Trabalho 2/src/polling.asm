@@ -18,6 +18,7 @@
 
 start:
 	LDH 	R4, #04h			; Mascara para o bit 10
+	LDL 	R4, #00h
 ip_polling:
 	LD 		R5, R1, R15	 		; R5 recebe dados entrando em port_a
 	AND 	R5, R4, R5			; Mascaramento para bit 10
@@ -30,10 +31,10 @@ ip_polling:
 	ST 		R15, R0, R15 		; Manda 0 em data_ack
 
 	ADD 	R5, R4, R15 		; Copia R4(Dado a guardar) para R5
-	ADDI 	R6, #8h			
+	ADDI 	R6, #08h			
 shift_right_loop:				; Shift right para R5 ficar com a parte alta de R4
 	SR0 	R5, R5
-	SUBI 	R6, #1h
+	SUBI 	R6, #01h
 	JMPZD 	#done_shift
 	JMPD 	#shift_right_loop		
 
@@ -55,8 +56,8 @@ ss_polling_low:
 	JMPZD	#ss_polling_low		; Se flag zero, SBY ainda eh 0
 
 	LDH 	R4, #02h			; Carrega bit 10 com 1, para ALD
-	ST 		R4, R1, R15			; Guarda R3 no registrador de output
-	ST 		R15, R1, R15		; Manda 0 em ALD
+	ST 		R4, R0, R15			; Guarda R3 no registrador de output
+	ST 		R15, R0, R15		; Manda 0 em ALD
 
 	JMPD 	#start
 

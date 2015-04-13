@@ -29,15 +29,7 @@ architecture Behavioral of BidirectionalPort  is
 	-- Output data register
 	signal port_out 	 	: std_logic_vector(DATA_WIDTH-1 downto 0);
 
-	-- Intermediate Signals
-	signal port_config_s, port_out_s 	: std_logic_vector(DATA_WIDTH-1 downto 0);
-
-	begin
-
-		for i in DATA_WIDTH-1 to 0 generate
-			port_io(i) 	<= port_out(i) when port_config(i) = '0' else 'Z';
-		end generate;
-	
+	begin	
 		process(clk, rst)
 		begin
 			if rst = '1' then
@@ -45,31 +37,23 @@ architecture Behavioral of BidirectionalPort  is
 				port_out    	<= x"0000";
 			elsif rising_edge(clk) then
 				if ce = '1' then
-					for i in DATA_WIDTH-1 downto 0 loop
-						if address = DATA_DIRECTION_ADDR and rw = '0' then
-							port_config_s(i) <= data(i);
-						elsif address = DATA_DIRECTION_ADDR and rw = '1' then
-							data(i) <= port_config_s(i);
-						
-						elsif address = OUTPUT_DATA_ADDR and rw = '0' then
-							port_out_s(i) <= data(i);
-						elsif address = OUTPUT_DATA_ADDR and rw = '1' then
-							 data(i) <= port_out_s(i);
-
-						elsif address = INPUT_DATA_ADDR and rw = '1' then
-							data(i) <= port_io(i);     
-						elsif address = INPUT_DATA_ADDR and rw = '0' then
-							data(i) <= 'Z';
-
-						else
-							data(i) <= 'Z';
-						end if;
-					end loop;
-				else
-					data <= (others => 'Z');
+					if address = DATA_DIRECTION_ADDR and rw = '0' then
+						port_config <= data;					
+					elsif address = OUTPUT_DATA_ADDR and rw = '0' then
+						port_out <= data;
+					end if;
 				end if;
 			end if;
 		end process;
+
+		data <= port_config when address = DATA_DIRECTION_ADDR and rw = '1' else
+				port_out 	when address = OUTPUT_DATA_ADDR and rw = '1' else
+				port_io 	when address = INPUT_DATA_ADDR and rw = '1' else
+				(others => 'Z');
+
+		output: for i in DATA_WIDTH-1 downto 0 generate
+			port_io(i) 	<= port_out(i) when port_config(i) = '0' else 'Z';
+		end generate;
 
 		-- rw = 0 -> write
 		-- rw = 1 -> read
