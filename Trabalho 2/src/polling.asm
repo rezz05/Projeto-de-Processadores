@@ -12,19 +12,16 @@
 	LDL 	R0, #F1h 			; R0 <= "FFF1" port_a output
 	LDL 	R1, #F2h 			; R1 <= "FFF2" port_a input
 	LDH 	R2, #FFh
-	LDL 	R2, #F4h			; R2 <= "FFF4" port_b output
-	LDH 	R3, #FFh
-	LDL 	R3, #F5h			; R3 <= "FFF5" port_b input
+	LDL 	R2, #F5h			; R2 <= "FFF5" port_b input
+	LDH 	R3, #04h			; Mascara para o bit 10
+	LDH 	R7, #01h 			; mascara para o bit 8
 
-start:
-	LDH 	R4, #04h			; Mascara para o bit 10
-	LDL 	R4, #00h
 ip_polling:
 	LD 		R5, R1, R15	 		; R5 recebe dados entrando em port_a
-	AND 	R5, R4, R5			; Mascaramento para bit 10
+	AND 	R5, R3, R5			; Mascaramento para bit 10
 	JMPZD	#ip_polling			; Se flag zero, data_av ainda eh 0
 
-	LD 		R4, R3, R15 		; R4 recebe dados em port_b
+	LD 		R4, R2, R15 		; R4 recebe dados em port_b
 	LDH 	R5, #08h
 	LDL 	R5, #00h			; R5 <= x"0800", para mandar 1 em data_ack
 	ST 		R5, R0, R15 		; Manda 1 em data_ack
@@ -40,10 +37,9 @@ shift_right_loop:				; Shift right para R5 ficar com a parte alta de R4
 
 done_shift:
 
-	LDH 	R7, #01h 			; mascara para o bit 8
 ss_polling_high:
-	LD 		R6, R1, R15	 		; R6 recebe input de port_a
-	AND 	R6, R6, R7			; Mascaramento para bit 8
+	LD 		R8, R1, R15	 		; R8 recebe input de port_a
+	AND 	R8, R8, R7			; Mascaramento para bit 8
 	JMPZD	#ss_polling_high	; Se flag zero, SBY ainda eh 0
 
 	LDH 	R5, #02h			; Carrega bit 10 com 1, para ALD
@@ -56,9 +52,9 @@ ss_polling_low:
 	JMPZD	#ss_polling_low		; Se flag zero, SBY ainda eh 0
 
 	LDH 	R4, #02h			; Carrega bit 10 com 1, para ALD
-	ST 		R4, R0, R15			; Guarda R3 no registrador de output
+	ST 		R4, R0, R15			; Guarda R4 no registrador de output
 	ST 		R15, R0, R15		; Manda 0 em ALD
 
-	JMPD 	#start
+	JMPD 	#ip_polling
 
 .endcode
