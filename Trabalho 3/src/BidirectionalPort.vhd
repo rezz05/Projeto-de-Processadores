@@ -19,6 +19,7 @@ entity BidirectionalPort is
 		ce          : in std_logic;
 		rw          : in std_logic;
 		-- "World" interface
+		irq 		: out std_logic;
 		port_io     : inout std_logic_vector (DATA_WIDTH-1 downto 0)
 	);
 end BidirectionalPort;
@@ -54,6 +55,8 @@ architecture Behavioral of BidirectionalPort  is
 		output: for i in DATA_WIDTH-1 downto 0 generate
 			port_io(i) 	<= port_out(i) when port_config(i) = '0' else 'Z';
 		end generate;
+
+		irq <= port_io(15) when port_config(15) = '1' else '0';
 
 		-- rw = 0 -> write
 		-- rw = 1 -> read

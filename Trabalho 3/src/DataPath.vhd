@@ -16,12 +16,16 @@ entity DataPath is
         -- Memory interface
         address     : out std_logic_vector(15 downto 0);
         data_in     : in  std_logic_vector(15 downto 0);
+        intr_addr   : in  std_logic_vector(15 downto 0);
         data_out    : out std_logic_vector(15 downto 0);
         
         -- Control path interface
-        uins        : in Microinstruction;
-        instruction : out std_logic_vector(15 downto 0);
-        flag        : out std_logic_vector(3 downto 0)
+        uins            : in Microinstruction;
+        instruction     : out std_logic_vector(15 downto 0);
+        flag            : out std_logic_vector(3 downto 0);
+        intr            : in std_logic;
+        intr_status     : out std_logic;
+        currentSintr    : in std_logic
     );
 end DataPath;
 
@@ -107,7 +111,7 @@ begin
         );
      
      -- RB register
-     REGISTER_B: entity work.RegisterNbits
+    REGISTER_B: entity work.RegisterNbits
         generic map (
             WIDTH   => 16
         )
@@ -152,9 +156,15 @@ begin
     begin
         if rst = '1' then
             flag <= (others =>'0');
+            intr_status <= '0';
         
         elsif rising_edge(clk) then
-         
+            if uins.mPC = "11" then
+                intr_status <= '1';
+            elsif uins.mb = "01" then
+                intr_status <= '0';
+            end if;
+
             if uins.wnz = '1' then
                 flag(0) <= negativeFlag;
                 flag(1) <= zeroFlag;  
@@ -190,8 +200,9 @@ begin
     --==============================================================================
     
     -- Operand selection for PC register.
-    dtPC <= ralu    when uins.mPC = "01" else    -- MUX connected to the PC register input       
-            data_in when uins.mPC = "00" else
+    dtPC <= ralu        when uins.mPC = "01" else    -- MUX connected to the PC register input       
+            data_in     when uins.mPC = "00" else
+            intr_addr   when uins.mPC = "11" else
             pc + 1; -- by default the PC is incremented;
     
     
@@ -231,6 +242,7 @@ begin
                 
    -- Data selection to memory storing
    -- ir(15 downto 12) = x"A": ST instruction
-   data_out <=  s2 when ir(15 downto 12)= x"A" else opB;    -- MUX connected to memory data bus
+   data_out <=  s2 when ir(15 downto 12)= x"A" and currentSintr = '0' else
+                opB;    -- MUX connected to memory data bus
                
 end DataPath;

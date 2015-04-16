@@ -10,18 +10,21 @@ use work.R8_pkg.all;
 
 entity ControlPath is
     port (
-        clk     : in std_logic;
-        rst     : in std_logic;
-        uins    : out microinstruction;             -- Control signals to data path
-        flag    : in std_logic_vector(3 downto 0);  -- Status flag from data path
-        ir      : in std_logic_vector(15 downto 0)  -- Current instruction from data path 
+        clk             : in std_logic;
+        rst             : in std_logic;
+        uins            : out microinstruction;             -- Control signals to data path
+        flag            : in std_logic_vector(3 downto 0);  -- Status flag from data path
+        ir              : in std_logic_vector(15 downto 0); -- Current instruction from data path
+        intr            : in std_logic;
+        intr_status     : in std_logic;
+        currentSintr    : out std_logic
     );
 end ControlPath;
 
 architecture ControlPath of ControlPath is
 
     -- 13 states
-    type State  is (Sidle, Sfetch, Sreg, Shalt, Salu, Srts, Spop, Sldsp, Sld, Sst, Swbk, Sjmp, Ssbrt, Spush);
+    type State  is (Sidle, Sfetch, Sreg, Shalt, Salu, Srts, Spop, Sldsp, Sld, Sst, Swbk, Sjmp, Ssbrt, Spush, Sintr);
     signal currentState, nextState : State;
 
     signal decodedInstruction : instruction;
@@ -39,6 +42,7 @@ architecture ControlPath of ControlPath is
     
   
 begin
+    currentSintr   <= '1' when currentState = Sintr else '0';
    
     ----------------------------------------------------------------------------------------
     -- Instruction decoding --
@@ -65,6 +69,7 @@ begin
                             RTS     when ir(15 downto 12) = x"B" and ir(3 downto 0) = x"8" else
                             POP     when ir(15 downto 12) = x"B" and ir(3 downto 0) = x"9" else
                             PUSH    when ir(15 downto 12) = x"B" and ir(3 downto 0) = x"A" else 
+                            RTI     when ir(15 downto 12) = x"B" and ir(3 downto 0) = x"B" else --COMENTARIO ENORME -------------------------------------------
                
                             -- Jump instructions (18). 
                             -- Here the status flags are tested to jump or not
@@ -109,9 +114,6 @@ begin
     instructionFormat2 <= true when decodedInstruction=ADDI or decodedInstruction=SUBI or decodedInstruction=LDL or decodedInstruction=LDH else false; 
               
   
-  
-  
-  
     -----------------------------------------------------------------------------
     -- FSM state register --
     -----------------------------------------------------------------------------
@@ -134,17 +136,23 @@ begin
   
         case currentState is
                   
-            when Sidle =>  
+            when Sidle => 
                 nextState <= Sfetch;
        
             
             -- First clock cycle after reset and after each instruction ends execution
-            when Sfetch =>  
-                nextState <= Sreg;
-              
+            when Sfetch =>
+                if intr = '1' and intr_status = '0' then
+                    nextState <= Sintr;
+                else
+                    nextState <= Sreg;
+                end if ;
   
-          
+
             -- Second clock cycle of every instruction
+            when Sintr =>
+                nextState <= Sfetch;
+
             when Sreg =>   
                 if decodedInstruction = HALT then      -- HALT fount => stop generating microinstructions
                     nextState <= Shalt;
@@ -214,17 +222,18 @@ begin
 
     -- Controls the MUX connected to the PC register input
     uins.mPC <= "10" when currentState = Sfetch else    -- PC++
-                "00" when currentState=Srts     else    -- Data from memory
+                "00" when currentState = Srts     else    -- Data from memory
+                "11" when currentState = Sintr  else
                 "01";                                   -- RALU register
 
     
     -- Controls the MUX connected to the SP register input
     -- The SP register employs pos-decrement for PUSH and pre-increment for POP
-    uins.mSP <= '1' when  decodedInstruction=JSRR or decodedInstruction=JSR or decodedInstruction=JSRD or decodedInstruction=PUSH else  '0';
+    uins.mSP <= '1' when  decodedInstruction=JSRR or decodedInstruction=JSR or decodedInstruction=JSRD or decodedInstruction=PUSH or currentState = Sintr else  '0';
   
               
     -- Controls the MUX connected to the memory address input
-    uins.mAddr <= "10" when currentState = Spush or  currentState = Ssbrt else  -- In subroutine call memory is addressed by SP to store PC
+    uins.mAddr <= "10" when currentState = Spush or  currentState = Ssbrt or currentState = Sintr else  -- In subroutine call memory is addressed by SP to store PC
                   "01" when currentState = Sfetch else    -- In instruction fetch memory is addressed by PC
                   "00";                                   -- RALU register. Used for LD/ST instructions.
 
@@ -242,19 +251,19 @@ begin
     -- Controls the MUX connected to the opA ALU input
     -- The first ALU operand is the instruction register when the instruction has format 2 or 
     -- is a JUMP_A/JSR with short offset 
-    uins.ma <= '1' when instructionFormat2 or decodedInstruction = JUMP_D or decodedInstruction = JSRD else '0';   
+    uins.ma <= '1' when instructionFormat2 or decodedInstruction = JUMP_D or decodedInstruction = JSRD else '0';  
 
     -- Controls the MUX connected to the opB ALU input
-    uins.mb <=  "01"  when  decodedInstruction = RTS or decodedInstruction = POP else   -- SP register
+    uins.mb <=  "01"  when  decodedInstruction = RTS or decodedInstruction = POP else
                 
                 -- in jumps and JSR instructions, the PC resgister is the ALU second operand
-                "10"  when  decodedInstruction=JUMP_R or decodedInstruction=JUMP_A or decodedInstruction=JUMP_D or decodedInstruction=JSRR or decodedInstruction=JSR or decodedInstruction=JSRD  else                 
+                "10"  when  decodedInstruction=JUMP_R or decodedInstruction=JUMP_A or decodedInstruction=JUMP_D or decodedInstruction=JSRR or decodedInstruction=JSR or decodedInstruction=JSRD or currentState = Sintr else                 
                 "00";   -- RB register      
 
   
     -- Controls the registers writing
-    uins.wPC   <= '1' when currentState = Sfetch or currentState = Sjmp or currentState = Ssbrt or currentState = Srts else '0';
-    uins.wSP   <= '1' when currentState = Sldsp  or currentState = Srts or currentState = Ssbrt or currentState = Spush or currentState = Spop else '0';
+    uins.wPC   <= '1' when (currentState = Sfetch and nextState /= Sintr) or currentState = Sjmp or currentState = Ssbrt or currentState = Srts or currentState = Sintr else '0';
+    uins.wSP   <= '1' when currentState = Sldsp  or currentState = Srts or currentState = Ssbrt or currentState = Spush or currentState = Spop or currentState = Sintr else '0';
     uins.wIR   <= '1' when currentState = Sfetch else '0';
     uins.wAB   <= '1' when currentState = Sreg else '0';
     uins.wRalu <= '1' when currentState = Salu else '0';
@@ -266,7 +275,7 @@ begin
     -- Controls the memory access
     --      rw = 0: write
     --      rw = 1: read
-    uins.ce <= '1' when rst = '0' and (currentState = Sfetch or currentState = Srts or currentState = Spop or currentState = Sld or currentState = Ssbrt or currentState = Spush or currentState = Sst) else '0';
+    uins.ce <= '1' when rst = '0' and (currentState = Sfetch or currentState = Srts or currentState = Spop or currentState = Sld or currentState = Ssbrt or currentState = Spush or currentState = Sst or currentState = Sintr) else '0';
     uins.rw <= '1' when currentState = Sfetch or currentState = Srts or currentState = Spop or currentState = Sld else '0';
   
 end ControlPath;

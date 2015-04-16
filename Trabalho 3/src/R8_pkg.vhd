@@ -13,9 +13,9 @@ package R8_pkg is
         SL0, SL1, SR0, SR1,
         LDL, LDH, LD, ST, LDSP, POP, PUSH,
         JUMP_R, JUMP_A, JUMP_D, JSRR, JSR, JSRD,
-        NOP, HALT,  RTS
+        NOP, HALT,  RTS, RTI
     );
-  
+          
     type Microinstruction is record
         mPC     : std_logic_vector(1 downto 0);  -- PC input MUX control
         mSP     : std_logic;                     -- SP input MUX control (stack-pointer)

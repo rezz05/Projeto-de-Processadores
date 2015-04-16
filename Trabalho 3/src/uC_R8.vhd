@@ -19,11 +19,14 @@ entity uC_R8 is
 end uC_R8;
 
 architecture structural of uC_R8 is
-  signal ce, ce_n, ce_p, we_n, oe_n, rw: std_logic;
+  signal ce, ce_n, ce_p, we_n, oe_n, rw, irq : std_logic;
 	signal dataBus, dataR8, addressR8, address, port_io: std_logic_vector(15 downto 0);
 begin
   
   R8: entity work.R8
+    generic map(
+      INTR_HND_ADDR => x"000C"
+    )
     port map(
       clk       => clk,
       rst       => rst,
@@ -31,13 +34,14 @@ begin
       data_out  => dataR8,
       address   => addressR8,
       ce        => ce,
-      rw        => rw
+      rw        => rw,
+      intr      => irq
     );
     
   MEM: entity work.Memory
     generic map(
       SIZE          => 1024,      -- 1024 words (2KB)
-      imageFileName => "polling.txt"
+      imageFileName => "BSort_Intr.txt"
     )
     port map(
       clk       => clk,
@@ -55,13 +59,14 @@ begin
 			INPUT_DATA_ADDR			=> x"FFF2"
 		)
     port map(
-      clk       => clk,
-      rst       => rst,
-      data      => dataBus,
-      address   => addressR8,
-      ce        => ce_p,
-      rw        => rw,
-      port_io   => port_a
+      clk         => clk,
+      rst         => rst,
+      data        => dataBus,
+      address     => addressR8,
+      ce          => ce_p,
+      rw          => rw,
+      port_io     => port_a,
+      irq         => irq
     );
     
   BIPORT_B: entity work.BidirectionalPort

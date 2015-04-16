@@ -35,9 +35,14 @@ use IEEE.std_logic_1164.all;
 use work.R8_pkg.all;
 
 entity R8 is
+    generic(
+        INTR_HND_ADDR  : std_logic_vector(15 downto 0) := x"0000"
+    );
     port( 
         clk     : in std_logic;
         rst     : in std_logic;
+        -- Interruption Request
+        intr    : in std_logic;
         
         -- Memory interface
         data_in : in std_logic_vector(15 downto 0);
@@ -53,28 +58,37 @@ architecture structural of R8 is
     signal flag: std_logic_vector(3 downto 0);
     signal uins: Microinstruction;
     signal instruction: std_logic_vector(15 downto 0);
+    signal intr_status_signal : std_logic;
+    signal currentSintr_s : std_logic;
 
 begin   
   
     DATA_PATH: entity work.DataPath 
         port map(
-            uins        => uins, 
-            clk         => clk,
-            rst         => rst,
-            instruction => instruction,
-            address     => address,
-            data_in     => data_in, 
-            data_out    => data_out, 
-            flag        => flag
+            uins            => uins, 
+            clk             => clk,
+            rst             => rst,
+            instruction     => instruction,
+            address         => address,
+            data_in         => data_in, 
+            data_out        => data_out, 
+            flag            => flag,
+            intr_addr       => INTR_HND_ADDR,
+            intr_status     => intr_status_signal,
+            intr            => intr,
+            currentSintr    => currentSintr_s
         );
 
     CONTROL_PATH: entity work.ControlPath 
         port map(
-            uins        => uins, 
-            clk         => clk, 
-            rst         => rst, 
-            flag        => flag, 
-            ir          => instruction
+            uins                => uins, 
+            clk                 => clk, 
+            rst                 => rst, 
+            flag                => flag, 
+            ir                  => instruction,
+            intr                => intr,
+            intr_status         => intr_status_signal,
+            currentSintr        => currentSintr_s
         );
 
     -- Memory signals

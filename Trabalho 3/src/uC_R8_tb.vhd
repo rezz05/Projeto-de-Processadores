@@ -25,6 +25,9 @@ begin
         );
 
   SYNTHESIZER: entity work.SpeechSynthesizer
+    generic map(
+      PROCESSING_TIME => 1 us
+    )
     port map(
       rst   => rst,
       A     => port_a(7 downto 0),
@@ -33,9 +36,12 @@ begin
     );
 
   INPUT_PERIPHERAL: entity work.InputPeripheral
+    generic map(
+      INTERVAL => 23 us
+    )
     port map(
       data      => port_b,
-      data_av   => port_a(10),
+      data_av   => port_a(15),  -- interruption
       data_ack  => port_a(11)
     );
 

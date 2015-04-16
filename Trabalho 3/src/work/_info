@@ -4,8 +4,8 @@ K3
 cModel Technology
 Z0 dC:\Trabalho Carara\src
 Ealu
-Z1 w1363372150
-Z2 DPx4 work 6 r8_pkg 0 22 JlFT9<SchXOcZ5OaD45XN3
+Z1 w1429046016
+Z2 DPx4 work 6 r8_pkg 0 22 SB8[08R:fJi<N:3=KWhSl3
 Z3 DPx4 ieee 15 std_logic_arith 0 22 4`Y?g_lkdn;7UL9IiJck01
 Z4 DPx4 ieee 18 std_logic_unsigned 0 22 RYmj;=TK`k=k>D@Cz`zoB3
 Z5 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
@@ -20,9 +20,9 @@ VMneL>J9=4iiCNkE]I^MSN2
 Z10 OV;C;10.1e;51
 32
 !i10b 1
-Z11 !s108 1428965448.088000
-Z12 !s90 -reportprogress|300|ALU.vhd|BidirectionalPort.vhd|ControlPath.vhd|DataPath.vhd|InputPeripheral.vhd|Memory.vhd|R8.vhd|R8_pkg.vhd|R8_tb.vhd|RegisterFile.vhd|RegisterNbits.vhd|SpeechSynthesizer.vhd|Util_package.vhd|uC_R8.vhd|uC_R8_tb.vhd|
-Z13 !s107 uC_R8_tb.vhd|uC_R8.vhd|Util_package.vhd|SpeechSynthesizer.vhd|RegisterNbits.vhd|RegisterFile.vhd|R8_tb.vhd|R8_pkg.vhd|R8.vhd|Memory.vhd|InputPeripheral.vhd|DataPath.vhd|ControlPath.vhd|BidirectionalPort.vhd|ALU.vhd|
+Z11 !s108 1429122337.182000
+Z12 !s90 -reportprogress|300|ALU.vhd|BidirectionalPort.vhd|ControlPath.vhd|DataPath.vhd|InputPeripheral.vhd|Memory.vhd|R8.vhd|R8_pkg.vhd|RegisterFile.vhd|RegisterNbits.vhd|SpeechSynthesizer.vhd|Util_package.vhd|uC_R8.vhd|uC_R8_tb.vhd|
+Z13 !s107 uC_R8_tb.vhd|uC_R8.vhd|Util_package.vhd|SpeechSynthesizer.vhd|RegisterNbits.vhd|RegisterFile.vhd|R8_pkg.vhd|R8.vhd|Memory.vhd|InputPeripheral.vhd|DataPath.vhd|ControlPath.vhd|BidirectionalPort.vhd|ALU.vhd|
 o-O0
 Z14 tExplicit 1
 Abehavioral
@@ -45,7 +45,7 @@ R13
 o-O0
 R14
 Ebidirectionalport
-Z18 w1428965438
+Z18 w1429121954
 R3
 R4
 R5
@@ -55,8 +55,8 @@ Z19 8BidirectionalPort.vhd
 Z20 FBidirectionalPort.vhd
 l0
 L5
-V_n5X`6VX<=I=RiX_4d?j=2
-!s100 hlJ9`1PjkcUgjoCCBz_;V3
+V3dl@=b0<4l[gB9je_aM@61
+!s100 FKFdX<BRQPBZTHU]3WZPN1
 R10
 32
 !i10b 1
@@ -70,11 +70,11 @@ R3
 R4
 R5
 R6
-Z21 DEx4 work 17 bidirectionalport 0 22 _n5X`6VX<=I=RiX_4d?j=2
-l32
-L26
-VgOJYQQWMm_B>:KH15R2EG0
-!s100 TSdZeN;lSzYgC;2okzg712
+Z21 DEx4 work 17 bidirectionalport 0 22 3dl@=b0<4l[gB9je_aM@61
+l33
+L27
+Z22 VcHP]bWPW83Qio^FzDD_:O0
+Z23 !s100 CK^GJ];mF?igG>T`KDGMV0
 R10
 32
 !i10b 1
@@ -84,19 +84,19 @@ R13
 o-O0
 R14
 Econtrolpath
-Z22 w1363787336
+Z24 w1429122315
 R2
 R3
 R4
 R5
 R6
 R7
-Z23 8ControlPath.vhd
-Z24 FControlPath.vhd
+Z25 8ControlPath.vhd
+Z26 FControlPath.vhd
 l0
 L11
-VO0[4U=c4<[BLO]YL>XK910
-!s100 ?BmM_NCnH2z]`X;kZC5Ao2
+VPgHm`ViMmjgQgbeZ^[<cL1
+!s100 JXQkg2ie7o?[nGL9@P9543
 R10
 32
 !i10b 1
@@ -111,11 +111,11 @@ R3
 R4
 R5
 R6
-Z25 DEx4 work 11 controlpath 0 22 O0[4U=c4<[BLO]YL>XK910
-l41
-L21
-Z26 VNSEhm[R<aK=JO94kQm1RB0
-Z27 !s100 4LkWbGGKP^ZdKk@>S9=cV3
+Z27 DEx4 work 11 controlpath 0 22 PgHm`ViMmjgQgbeZ^[<cL1
+l44
+L24
+Vk?Zn294^=RiX0JiEO][701
+!s100 GW;P]83:kUI:ET7QLR8ED1
 R10
 32
 !i10b 1
@@ -125,7 +125,7 @@ R13
 o-O0
 R14
 Edatapath
-Z28 w1363712640
+Z28 w1429122305
 R2
 R3
 R4
@@ -136,8 +136,8 @@ Z29 8DataPath.vhd
 Z30 FDataPath.vhd
 l0
 L11
-Vj^VkB3[a>a[hhdTc]G1dN1
-!s100 >^NA5D<Ro<1aHC`05U9P[1
+Vg4^m9QQiS9zo]<RdjT_Rb3
+!s100 lAcWE6=CEzC>^HE[;P3Cm2
 R10
 32
 !i10b 1
@@ -155,11 +155,11 @@ R3
 R4
 R5
 R6
-Z33 DEx4 work 8 datapath 0 22 j^VkB3[a>a[hhdTc]G1dN1
-l42
-L28
-Z34 VEFK3;RBDIbkZWA:a:_e1O0
-Z35 !s100 nVel>2=ZdPEXShoeRHade3
+Z33 DEx4 work 8 datapath 0 22 g4^m9QQiS9zo]<RdjT_Rb3
+l46
+L32
+Z34 VX[OBHR`A3Ki3f_1c4WakJ0
+!s100 3EXB7If]0A6QBSzg;>ELM0
 R10
 32
 !i10b 1
@@ -169,14 +169,14 @@ R13
 o-O0
 R14
 Einputperipheral
-Z36 w1426817246
+Z35 w1426817246
 R3
 R4
 R5
 R6
 R7
-Z37 8InputPeripheral.vhd
-Z38 FInputPeripheral.vhd
+Z36 8InputPeripheral.vhd
+Z37 FInputPeripheral.vhd
 l0
 L9
 Vz80eOKdM;2k`d[0;2HYHW0
@@ -194,11 +194,11 @@ R3
 R4
 R5
 R6
-Z39 DEx4 work 15 inputperipheral 0 22 z80eOKdM;2k`d[0;2HYHW0
+Z38 DEx4 work 15 inputperipheral 0 22 z80eOKdM;2k`d[0;2HYHW0
 l22
 L21
-Z40 VF]SK]zXHWHCBOh;L5DLU@1
-Z41 !s100 R@DEgT0gH8ITXRl9Ua:Fe1
+Z39 VF]SK]zXHWHCBOh;L5DLU@1
+Z40 !s100 R@DEgT0gH8ITXRl9Ua:Fe1
 R10
 32
 !i10b 1
@@ -208,15 +208,15 @@ R13
 o-O0
 R14
 Ememory
-Z42 w1422007140
-Z43 DPx4 work 12 util_package 0 22 2hkWjKAV6cYWRWaUKeoB00
+Z41 w1422007140
+Z42 DPx4 work 12 util_package 0 22 2hkWjKAV6cYWRWaUKeoB00
 R3
 R4
 R5
 R6
 R7
-Z44 8Memory.vhd
-Z45 FMemory.vhd
+Z43 8Memory.vhd
+Z44 FMemory.vhd
 l0
 L12
 V]0YTR6295CKTUl@WGHMlz1
@@ -230,16 +230,16 @@ R13
 o-O0
 R14
 Abehavioral
-R43
+R42
 R3
 R4
 R5
 R6
-Z46 DEx4 work 6 memory 0 22 ]0YTR6295CKTUl@WGHMlz1
+Z45 DEx4 work 6 memory 0 22 ]0YTR6295CKTUl@WGHMlz1
 l94
 L29
-Z47 V[;Q_hVjE7l[dLbh5eamhG1
-Z48 !s100 GcSamDRnUz2<e60ga90E[1
+Z46 V[;Q_hVjE7l[dLbh5eamhG1
+Z47 !s100 GcSamDRnUz2<e60ga90E[1
 R10
 32
 !i10b 1
@@ -249,17 +249,17 @@ R13
 o-O0
 R14
 Er8
-Z49 w1422349014
+Z48 w1429122332
 R2
 R5
 R6
 R7
-Z50 8R8.vhd
-Z51 FR8.vhd
+Z49 8R8.vhd
+Z50 FR8.vhd
 l0
 L37
-V]I1=UaDQ:ogWfjS8PDD3l1
-!s100 EdjVlmYKe?5?^38ZC?TQI2
+V8@JBC00`oe?^DdH5X<Hn83
+!s100 [jfQ50a80a1[:1lEIh^GU1
 R10
 32
 !i10b 1
@@ -269,18 +269,18 @@ R13
 o-O0
 R14
 Astructural
-R25
+R27
 R3
 R4
 R33
 R2
 R5
 R6
-Z52 DEx4 work 2 r8 0 22 ]I1=UaDQ:ogWfjS8PDD3l1
-l57
-L51
-Z53 VWI5oHKFKiGjEc5d[f>``52
-Z54 !s100 Y;fa@cMVJzCJJRon;coKW2
+Z51 DEx4 work 2 r8 0 22 8@JBC00`oe?^DdH5X<Hn83
+l64
+L56
+V8Q4E9?:[GFK6mP;@GdZ>l3
+!s100 `d1SPaeIlofIOHHWB?Q[z2
 R10
 32
 !i10b 1
@@ -292,14 +292,14 @@ R14
 Pr8_pkg
 R5
 R6
-Z55 w1422005348
+Z52 w1429119025
 R7
-Z56 8R8_pkg.vhd
-Z57 FR8_pkg.vhd
+Z53 8R8_pkg.vhd
+Z54 FR8_pkg.vhd
 l0
 L4
-VJlFT9<SchXOcZ5OaD45XN3
-!s100 c6bDo]Ng<KR23@Ha?K]9S2
+VSB8[08R:fJi<N:3=KWhSl3
+!s100 8WTcmQ4c`D@8Sm:U?;kQ81
 R10
 32
 b1
@@ -315,8 +315,8 @@ R5
 R6
 l0
 L46
-Z58 V=0:_nY0nFBS^C3I1VbY720
-Z59 !s100 C_9k?@H;KPhG2^lK;ZeoU1
+Z55 V=0:_nY0nFBS^C3I1VbY720
+Z56 !s100 C_9k?@H;KPhG2^lK;ZeoU1
 R10
 32
 !i10b 1
@@ -327,57 +327,57 @@ o-O0
 R14
 nbody
 Er8_tb
-Z60 w1426847149
-R2
+Z57 w1426847149
+Z58 DPx4 work 6 r8_pkg 0 22 JlFT9<SchXOcZ5OaD45XN3
 R5
 R6
 R7
-Z61 8R8_tb.vhd
-Z62 FR8_tb.vhd
+Z59 8R8_tb.vhd
+Z60 FR8_tb.vhd
 l0
 L11
 VR]BT[LM8KNzCg[zbSXe5L3
-!s100 nN3Q_>^5fBaG;V]9K]EPW3
 R10
 32
-!i10b 1
-R11
-R12
-R13
+Z61 !s90 -reportprogress|300|ALU.vhd|BidirectionalPort.vhd|ControlPath.vhd|DataPath.vhd|InputPeripheral.vhd|Memory.vhd|R8.vhd|R8_pkg.vhd|R8_tb.vhd|RegisterFile.vhd|RegisterNbits.vhd|SpeechSynthesizer.vhd|Util_package.vhd|uC_R8.vhd|uC_R8_tb.vhd|
+Z62 !s107 uC_R8_tb.vhd|uC_R8.vhd|Util_package.vhd|SpeechSynthesizer.vhd|RegisterNbits.vhd|RegisterFile.vhd|R8_tb.vhd|R8_pkg.vhd|R8.vhd|Memory.vhd|InputPeripheral.vhd|DataPath.vhd|ControlPath.vhd|BidirectionalPort.vhd|ALU.vhd|
 o-O0
 R14
+!s108 1429038589.849000
+!s100 nN3Q_>^5fBaG;V]9K]EPW3
+!i10b 1
 Abehavioral
-R43
+R42
 R3
 R4
-R46
-R52
-R2
+R45
+DEx4 work 2 r8 0 22 ]I1=UaDQ:ogWfjS8PDD3l1
+R58
 R5
 R6
-Z63 DEx4 work 5 r8_tb 0 22 R]BT[LM8KNzCg[zbSXe5L3
+DEx4 work 5 r8_tb 0 22 R]BT[LM8KNzCg[zbSXe5L3
 l20
 L14
-Z64 V6jjXQS:NTXii_zATRdlco3
-Z65 !s100 ?Lj<Gmc<=zK`AJEEahZMj3
+V6jjXQS:NTXii_zATRdlco3
 R10
 32
-!i10b 1
-R11
-R12
-R13
+R61
+R62
 o-O0
 R14
+!s108 1429034273.045000
+!s100 ?Lj<Gmc<=zK`AJEEahZMj3
+!i10b 1
 Eregisterfile
-Z66 w1365603698
+Z63 w1365603698
 R2
 R3
 R4
 R5
 R6
 R7
-Z67 8RegisterFile.vhd
-Z68 FRegisterFile.vhd
+Z64 8RegisterFile.vhd
+Z65 FRegisterFile.vhd
 l0
 L13
 VhQYZ:hdGF;m`c01BJk2MF3
@@ -400,8 +400,8 @@ R6
 R31
 l33
 L26
-Z69 VHi_boEeWUniST10znb:8^3
-Z70 !s100 cDVk=<0lbCJ0BlU1LK@c^0
+Z66 VHi_boEeWUniST10znb:8^3
+Z67 !s100 cDVk=<0lbCJ0BlU1LK@c^0
 R10
 32
 !i10b 1
@@ -411,13 +411,13 @@ R13
 o-O0
 R14
 Eregisternbits
-Z71 w1363119556
+Z68 w1363119556
 R3
 R5
 R6
 R7
-Z72 8RegisterNbits.vhd
-Z73 FRegisterNbits.vhd
+Z69 8RegisterNbits.vhd
+Z70 FRegisterNbits.vhd
 l0
 L11
 V]Cfo3OYgVz_iW@N1L8D1@2
@@ -437,8 +437,8 @@ R6
 R32
 l27
 L26
-Z74 VMCOkEK^H94j38^^Q8873;1
-Z75 !s100 4WfPlT7=LoiWGa0iLkAG41
+Z71 VMCOkEK^H94j38^^Q8873;1
+Z72 !s100 4WfPlT7=LoiWGa0iLkAG41
 R10
 32
 !i10b 1
@@ -448,12 +448,12 @@ R13
 o-O0
 R14
 Espeechsynthesizer
-Z76 w1428596415
+Z73 w1428596415
 R5
 R6
 R7
-Z77 8SpeechSynthesizer.vhd
-Z78 FSpeechSynthesizer.vhd
+Z74 8SpeechSynthesizer.vhd
+Z75 FSpeechSynthesizer.vhd
 l0
 L9
 Vlc:fEP]ND4^H<=hR=eK^T1
@@ -469,11 +469,11 @@ R14
 Astructural
 R5
 R6
-Z79 DEx4 work 17 speechsynthesizer 0 22 lc:fEP]ND4^H<=hR=eK^T1
+Z76 DEx4 work 17 speechsynthesizer 0 22 lc:fEP]ND4^H<=hR=eK^T1
 l26
 L22
-Z80 VGFljc`NYKIjFnFa7E8Oin1
-Z81 !s100 P;MN_lm6__fMJhg^7@Rz>2
+Z77 VGFljc`NYKIjFnFa7E8Oin1
+Z78 !s100 P;MN_lm6__fMJhg^7@Rz>2
 R10
 32
 !i10b 1
@@ -483,15 +483,15 @@ R13
 o-O0
 R14
 Euc_r8
-Z82 w1428963917
+Z79 w1429119078
 R2
 R3
 R4
 R5
 R6
 R7
-Z83 8uC_R8.vhd
-Z84 FuC_R8.vhd
+Z80 8uC_R8.vhd
+Z81 FuC_R8.vhd
 l0
 L12
 VX:Im30E7TL^CCXoX[12WN3
@@ -506,19 +506,19 @@ o-O0
 R14
 Astructural
 R21
-R43
-R46
-R52
+R42
+R45
+R51
 R2
 R3
 R4
 R5
 R6
-Z85 DEx4 work 5 uc_r8 0 22 X:Im30E7TL^CCXoX[12WN3
+Z82 DEx4 work 5 uc_r8 0 22 X:Im30E7TL^CCXoX[12WN3
 l24
 L21
-Z86 V]9R09UheMZjnR[I4;_=E[1
-Z87 !s100 hkY0;Pido9V7;fP`Xz=RZ1
+Z83 Vl6iAJfJnzl[mTA4O]50a83
+Z84 !s100 I^mbW^URU0Me9oYmgkmfo0
 R10
 32
 !i10b 1
@@ -528,12 +528,12 @@ R13
 o-O0
 R14
 Euc_r8_tb
-Z88 w1428596016
+Z85 w1429104051
 R5
 R6
 R7
-Z89 8uC_R8_tb.vhd
-Z90 FuC_R8_tb.vhd
+Z86 8uC_R8_tb.vhd
+Z87 FuC_R8_tb.vhd
 l0
 L9
 V32fO7zmCjmj[8^IPiE;U63
@@ -547,19 +547,19 @@ R13
 o-O0
 R14
 Abehavioral
-R39
-R79
+R38
+R76
 R2
 R3
 R4
-R85
+R82
 R5
 R6
-Z91 DEx4 work 8 uc_r8_tb 0 22 32fO7zmCjmj[8^IPiE;U63
+Z88 DEx4 work 8 uc_r8_tb 0 22 32fO7zmCjmj[8^IPiE;U63
 l17
 L12
-Z92 V[TL79ITGO]F>o>ikTZ_ni0
-Z93 !s100 [73i>hRo_oNTK?M[oK9lC3
+Z89 VQC:;U<3^IY@YAA>2h2nTU2
+Z90 !s100 FHdnF=fdG10`:[=SmFn7k3
 R10
 32
 !i10b 1
@@ -571,10 +571,10 @@ R14
 Putil_package
 R5
 R6
-Z94 w1350392376
+Z91 w1350392376
 R7
-Z95 8Util_package.vhd
-Z96 FUtil_package.vhd
+Z92 8Util_package.vhd
+Z93 FUtil_package.vhd
 l0
 L9
 V2hkWjKAV6cYWRWaUKeoB00
@@ -589,13 +589,13 @@ R13
 o-O0
 R14
 Bbody
-R43
+R42
 R5
 R6
 l0
 L22
-Z97 VI^[Q@RGhJjSgg<lDb5zNl2
-Z98 !s100 foU0>ALQz_>^efYdBDSB`3
+Z94 VI^[Q@RGhJjSgg<lDb5zNl2
+Z95 !s100 foU0>ALQz_>^efYdBDSB`3
 R10
 32
 !i10b 1
