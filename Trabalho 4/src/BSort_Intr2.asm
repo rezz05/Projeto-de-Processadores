@@ -1,19 +1,37 @@
 .code
 
-boot: ; ARRUMAR BOOT BIT 15 E 14
+boot:
 ; Configuração da porta
 ; Setar SP = 0x3FF (fim da memória de dados)
 ; Salta para bubble sort (jmpd #BubbleSort)
-	LDL		R0, #18h			
+	LDL		R0, #Interruption_handler			
 	LDINTA 	R0					; Endereco de Interruption_handler
+
+	LDL 	R0, #C0h
+	LDH 	R1, #FFh
+	LDL 	R1, #F7h			
+	ST 		R0, R1, R15 		; Inicializacao da Mask da PIC
+
 	LDH 	R0, #input_array
-	LDL 	R0, #input_array
+	LDL 	R0, #input_array 	
 	LDH 	R1, #to_remove
 	LDL 	R1, #to_remove
 	LDH 	R2, #input_pointer
 	LDL 	R2, #input_pointer
-	ST 		R0, R1, R15
-	ST 		R0, R2, R15
+	ST 		R0, R1, R15			; Inicializacao do ponteiro de remocao do array do input_peripheral
+	ST 		R0, R2, R15 		; Inicializacao do ponteiro do array de input_peripheral
+
+	LDL 	R1, #input_peripheral_handler
+	LDH 	R1, #input_peripheral_handler
+	LDL 	R2, #speech_synthesizer_handler
+	LDH 	R2, #speech_synthesizer_handler
+	LDL 	R0, #interruption_array
+	LDH 	R0, #interruption_array ; R0 <= &interruption_array
+	ADDI 	R0, #6h 				; R0 <= &interruption_array[6]
+	ST 		R1, R0, R15 			; interruption_array[6] <= #input_peripheral_handler
+	ADDI 	R0, #1h 				; R0 <= &interruption_array[7]
+	ST 		R2, R0, R15 			; interruption_array[7] <= #speech_synthesizer_handler
+
 	LDL 	R0, #F0h			; setup das portas
 	LDH 	R0, #FFh			; R0 recebe endereco de port_a			
 	LDH 	R1, #E0h
@@ -45,24 +63,23 @@ Interruption_handler:
 	PUSH	R2
 	PUSH	R1
 	PUSH	R0
-	PUSHF
+	PUSHF						; Salvamento de contexto
 
 	LDH 	R0, #FFh
-	LDL 	R0, #F2h 			; R1 <= "FFF2" port_a input
-	LD 		R1, R0, R15 		; R1 recebe dados em port_a
+	LDL 	R0, #F6h 			
+	LD 		R8, R0, R15 		; R8 <= "FFF6" IRQ_ID
+	LDH 	R8, #00h
 
-	; Teste input peripheral
-	LDH 	R2, #40h 			; mascara para o bit 14
-	LDL 	R2, #00h
-	AND 	R2, R2, R1
-	JMPZD 	#speech_sr_call
-	JSRD 	#input_peripheral_handler
-	JMPD 	#interruption_end
-
-speech_sr_call:
-	JSRD 	#speech_synthesizer_handler
+	LDH 	R0, #interruption_array
+	LDL 	R0, #interruption_array
+	ADD 	R0, R0, R8  	 		; R0 <= &interruption_array[R8] / R8 == IRQ_ID
+	LD 		R0, R0, R15 			; R0 <= interruption_array[R8]
+	JSR 	R0 						; Pula para endereco da interrupcao indidcada em interruption_array[R8]
 
 interruption_end:
+	LDH 	R0, #FFh
+	LDL 	R0, #F8h
+	ST 		R8, R0, R15 	 	; INT_ACK <= IRQ_ID
 	POPF
 	POP 	R0
 	POP 	R1
@@ -73,7 +90,7 @@ interruption_end:
 	POP 	R6
 	POP 	R7
 	POP 	R8
-	RTI
+	RTI 						; Retorno de contexto
 
 input_peripheral_handler:
 	LDH 	R0, #FFh
@@ -189,12 +206,13 @@ end:
 ; Data area (variables)
 .data
 
-    array:     		db #20h, #19h, #18h, #17h, #16h, #15h, #14h, #13h, #12h, #11h, #10h, #9h, #8h, #7h, #6h, #5h, #4h, #3h, #2h, #1h
-    size:      		db #20    ; 'array' size
-    input_size:		db #20
-    input_pointer: 	db #0h
-    to_remove: 		db #0h
-    input_array: 	db #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h
+    array:     			db #20h, #19h, #18h, #17h, #16h, #15h, #14h, #13h, #12h, #11h, #10h, #9h, #8h, #7h, #6h, #5h, #4h, #3h, #2h, #1h
+    size:      			db #20    ; 'array' size
+    interruption_array: db #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h
+    input_size:			db #20
+    input_pointer: 		db #0h
+    to_remove: 			db #0h
+    input_array: 		db #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h, #0h
 
 
 .enddata

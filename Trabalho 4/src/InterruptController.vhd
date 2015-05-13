@@ -19,7 +19,7 @@ use IEEE.numeric_std.all;
 entity InterruptController  is
 	generic (
         ADDRESS_WIDTH   : integer := 16;    -- Address bus width in bits
-        IRQ_ID_ADDR     : std_logic_vector(15 downto 0);
+        IRQ_ID_ADDR     : std_logic_vector(15 downto 0);          
         INT_ACK_ADDR    : std_logic_vector(15 downto 0);          -- Interrupt acknowledgement address
         MASK_ADDR       : std_logic_vector(15 downto 0)           -- Mask register address
     );

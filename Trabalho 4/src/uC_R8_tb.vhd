@@ -26,7 +26,7 @@ begin
 
   SYNTHESIZER: entity work.SpeechSynthesizer
     generic map(
-      PROCESSING_TIME => 10 us
+      PROCESSING_TIME => 30 us
     )
     port map(
       rst   => rst,

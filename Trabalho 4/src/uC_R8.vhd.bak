@@ -20,7 +20,7 @@ end uC_R8;
 
 architecture structural of uC_R8 is
   signal ce, ce_n, ce_p, we_n, oe_n, rw, irq, ce_pic : std_logic;
-  signal dataPIC : std_logic_vector(7 downto 0);
+  signal irq_pic, dataPIC : std_logic_vector(7 downto 0);
   signal irq_p : std_logic_vector(2 downto 0);
 	signal dataBus, dataR8, addressR8, address, port_io: std_logic_vector(15 downto 0);
 begin
@@ -98,9 +98,9 @@ begin
       rw      => rw,
       ce      => ce_p,
       intr    => irq,
-      irq(7)     => irq_p(2),
-      irq(6)     => irq_p(1),
-      irq(5)     => irq_p(0),
+      irq(7)     => irq_pic(2),
+      irq(6)     => irq_pic(1),
+      irq(5)     => irq_pic(0),
       irq(4 downto 0) => "00000"
     );   
 
