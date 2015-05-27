@@ -113,7 +113,7 @@ add wave -noupdate -radix hexadecimal /uc_r8_tb/MICROCONTROLADOR/MEM/oe_n
 add wave -noupdate -radix hexadecimal /uc_r8_tb/MICROCONTROLADOR/MEM/address
 add wave -noupdate -radix hexadecimal -childformat {{/uc_r8_tb/MICROCONTROLADOR/MEM/data(15) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(14) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(13) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(12) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(11) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(10) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(9) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(8) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(7) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(6) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(5) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(4) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(3) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(2) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(1) -radix hexadecimal} {/uc_r8_tb/MICROCONTROLADOR/MEM/data(0) -radix hexadecimal}} -subitemconfig {/uc_r8_tb/MICROCONTROLADOR/MEM/data(15) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(14) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(13) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(12) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(11) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(10) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(9) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(8) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(7) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(6) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(5) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(4) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(3) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(2) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(1) {-height 15 -radix hexadecimal} /uc_r8_tb/MICROCONTROLADOR/MEM/data(0) {-height 15 -radix hexadecimal}} /uc_r8_tb/MICROCONTROLADOR/MEM/data
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {128863636 ps} 0}
+WaveRestoreCursors {{Cursor 1} {78110795 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
@@ -129,4 +129,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ps} {945 us}
+WaveRestoreZoom {0 ps} {840 us}

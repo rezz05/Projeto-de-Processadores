@@ -99,6 +99,15 @@ input_peripheral_handler:
 	LDH 	R5, #FFh
 	LDL 	R5, #F1h 			; R0 <= "FFF1" port_a output
 
+	LDH 	R1, #queue_size
+	LDL	 	R1, #queue_size
+	LD 		R1, R1, R15	 			; R1 <= queue_size
+	LDH 	R2, #queue_max_size
+	LDL	 	R2, #queue_max_size
+	LD 		R2, R2, R15
+	SUB 	R1, R2, R1 	 			; R0 <= queue_size - queue_max_size
+	JMPZD 	#full
+
 	LD 		R1, R0, R15 		; R1 recebe dados em port_b
 	LDH 	R2, #08h
 	LDL 	R2, #00h			; R2 <= x"0800", para mandar 1 em data_ack
@@ -114,18 +123,18 @@ input_peripheral_handler:
 	LD 		R1, R0, R15	
 	ADDI 	R1, #1h 			; R1++
 	ST 		R1, R0, R15 		; queue_size++
+	JMPD 	#skip1
 
-	LDH 	R2, #queue_max_size
-	LDL	 	R2, #queue_max_size
-	LD 		R2, R2, R15
-	SUB 	R0, R2, R1 	 			; R0 <= queue_size - queue_max_size
-	JMPZD 	#input_hnd_masking
-	JMPD  	#skip1
-
-input_hnd_masking:
+full:
 	LDH 	R1, #FFh
-	LDL 	R1, #F7h			
-	ST 		R15, R1, R15 		; MASK <= #00h | Zera o irq do Input Peripheral
+	LDL 	R1, #F7h 			; R1 <= &MASK
+	LD 		R2, R1, R15 		; R2 <= MASK
+	LDH 	R2, #00h 			; Fix da parte alta
+	LDH 	R0, #00h
+	LDL 	R0, #BFh 			; Mascara para zerar bit 6
+	AND 	R0, R2, R0 			; R0 <= MASK AND "BF"
+	ST 		R0, R1, R15 		; MASK <= R1 | Zera o irq do Input Peripheral
+	RTS
 
 skip1:
 	LDH 	R0, #queue_end
@@ -213,28 +222,36 @@ write_low:
 
 	ADDI 	R0, #01h 			;
 	ST 		R0, R3, R15 		; to_remove++
-	JMPD 	#end_speech_hnd
+	JMPD 	#output
 
 ; Bloco que faz to_remove voltar para o inicio da fila quando chega ao fim
 to_remove_queue_end:
 	LDH 	R4, #queue
 	LDL 	R4, #queue 			; R4 <= &queue
 	ST 		R4, R3, R15 		; to_remove <= &queue
-	JMPD 	#end_speech_hnd
+	JMPD 	#output
 
+; Desativa IRQ do Synthesizer quando a fila estiver vazia
 empty:
 	LDH 	R1, #FFh
-	LDL 	R1, #F7h 			; R1 <= &MASK	
-	ST 		R15, R1, R15 		; Desativa irq do Synthesizer
+	LDL 	R1, #F7h 			; R1 <= &MASK
+	LD 		R2, R1, R15 		; R2 <= MASK
+	LDH 	R2, #00h 			; Fix para a parte alta
+	LDH 	R3, #00h
+	LDL 	R3, #7Fh
+	AND 	R2, R3, R2 			; R2 <= MASK AND "7F"
+	ST 		R2, R1, R15 		; Desativa irq do Synthesizer
+	JMPD 	#end_speech_hnd
+	RTS
 
-	LDL 	R6, #FFh 			; Carrega parte baixa com FF
-
-end_speech_hnd:
-
+; Realiza o output dos dados do array
+output:
 	LDH 	R6, #02h			; Carrega bit 10 com 1, para ALD
 	ST 		R6, R5, R15			; Guarda R6 no registrador de output
 	ST 		R15, R5, R15		; Manda 0 em ALD
 
+; Finaliza a interruption e faz o mascaramento desejado
+end_speech_hnd:
 	LDH 	R0, #00h
 	LDL 	R0, #40h
 	LDH 	R1, #FFh

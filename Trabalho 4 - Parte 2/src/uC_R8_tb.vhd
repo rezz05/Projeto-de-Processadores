@@ -37,7 +37,7 @@ begin
 
   INPUT_PERIPHERAL: entity work.InputPeripheral
     generic map(
-      INTERVAL => 1 us
+      INTERVAL => 15 us
     )
     port map(
       data      => port_b,
